@@ -8,7 +8,7 @@
 ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
 
 
-![VersionAPP](https://img.shields.io/github/package-json/v/GuimaSpace/WorkFlowPlus?color=blue) ![SizeCode](https://img.shields.io/github/languages/code-size/GuimaSpace/WorkFlowPlus?style=flat-square) ![AllFiles](https://img.shields.io/github/directory-file-count/GuimaSpace/WorkFlowPlus)
+![VersionAPP](https://img.shields.io/github/package-json/v/GuimaSpace/WorkFlowPlus?color=blue) [![SizeCode](https://img.shields.io/github/languages/code-size/GuimaSpace/WorkFlowPlus?style=flat-square)](https://img.shields.io/github/directory-file-count/GuimaSpace/WorkFlowPlus) ![AllFiles](https://img.shields.io/github/directory-file-count/GuimaSpace/WorkFlowPlus)
 
 
 ## About the project
