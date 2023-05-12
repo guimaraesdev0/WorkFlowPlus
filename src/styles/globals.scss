@@ -10,9 +10,9 @@
     }
 
     body {
-        @apply text-white;
+        @apply bg-neutral-900 text-white;
         //background-image: linear-gradient(350deg, #000000 0%, #021a50 50%, #000000 100%);
-        background-image: linear-gradient(190deg, #0776d0 0%, #000000 30%, #0c0c0c 100%);
+        // background-image: linear-gradient(190deg, #0776d0 0%, #000000 30%, #0c0c0c 100%);
 
     }
 
@@ -30,6 +30,19 @@
     } 
 
     .formInput {
-        @apply w-full h-12 rounded-sm bg-zinc-700 text-sm text-opacity-10 rounded-lg pl-4 shadow-2xl focus:ring-1 transition focus:ring-sky-400 focus:outline-none focus:text-white
+        @apply w-full h-12 bg-zinc-700 text-sm text-opacity-10 rounded-lg pl-4 shadow-2xl focus:ring-1 transition focus:ring-sky-400 focus:outline-none focus:text-white
+    }
+
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateX(70%) translateY(80%) rotate(-45deg);
+        }
+        50% {
+            transform: none;
+        }
+    }
+
+    .animate-button {
+        animation: bounce 30s infinite;
     }
 }

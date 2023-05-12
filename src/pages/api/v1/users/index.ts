@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       //Verifica se o email existe
       if (await userController.verifyUserEmail(trustedUserData.email)) {
-        res.status(405).json({ Error: "Esse email já está cadastrado no sistema" });
+        res.status(405).json({ error: "Esse email já está cadastrado no sistema" });
         return;
       }
 
@@ -22,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return;
 
     } catch (error) {
-      res.status(405).json({ Error: "" + error });
+      res.status(405).json({ error: "" + error });
     }
     return;
   }

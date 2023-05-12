@@ -31,11 +31,6 @@ export default function Register() {
             },
         };
 
-
-
-
-
-
         await axios
             .request(options)
             .then(async res => {
@@ -46,11 +41,8 @@ export default function Register() {
                 })
                 console.log(resLogIn)
             }).catch((err) => {
-                setError(err.response.data.Error)
+                setError(err.response.data.error)
             })
-
-
-
     }
     return (
         <div className='flex flex-row items-center justify-center w-screen h-screen py-32 space-x-10'>
