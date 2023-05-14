@@ -2,30 +2,31 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { ServiceInterface } from '@/models';
 import api from '../../../services/api.service';
-import { serviceController } from '@/controller';
 import axios from 'axios';
 
 interface Props {
+    workstationid: string;
     services: ServiceInterface[];
     totalPages: number;
 }
 
 const PAGE_SIZE = 20;
 
-const ServiceList = ({ services, totalPages }: Props) => {
+const ServiceList = ({ services, totalPages, workstationid }: Props) => {
     const router = useRouter();
     const [currentPage, setCurrentPage] = useState(Number(router.query.page) || 1);
     const [limit] = useState(PAGE_SIZE);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [servicesData, setServicesData] = useState(services);
+    console.log(servicesData)
 
     useEffect(() => {
         setLoading(true);
         setError(false);
 
         api
-            .get(`/services?page=${currentPage}&limit=${limit}`)
+            .get(`/services?workstationId=${workstationid}&page=${currentPage}&limit=${limit}`)
             .then((response) => {
                 setLoading(false);
                 setServicesData(response.data.data);
@@ -77,10 +78,9 @@ const ServiceList = ({ services, totalPages }: Props) => {
             ) : (
 
                 <>
-                    <div className="pagination h-10">{renderPagination()}</div>
                     <div className="flex flex-col">
                         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                            <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                            <div className="inline-block min-w-full sm:px-6 lg:px-8">
                                 <div className="overflow-hidden">
                                     <table className="min-w-full text-left text-sm font-light">
                                         <thead
@@ -116,6 +116,7 @@ const ServiceList = ({ services, totalPages }: Props) => {
                                             })}
                                         </tbody>
                                     </table>
+                                    <div className="pagination h-10">{renderPagination()}</div>
                                 </div>
                             </div>
                         </div>

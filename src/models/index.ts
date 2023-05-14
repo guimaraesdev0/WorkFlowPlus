@@ -14,6 +14,7 @@ export interface UserInterface {
 export interface ServiceInterface {
     data: any;
     id: string;
+    workstationid: string;
     title: string;
     description: string;
     place: string;
@@ -23,7 +24,7 @@ export interface ServiceInterface {
     status: number | 0
 }
 
-interface Collaborator {
+export interface Collaborator {
     email: string;
     manager: boolean;
     whitelist: boolean;

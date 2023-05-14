@@ -6,7 +6,7 @@ import { ServiceInterface } from '@/models';
 
 export const ValidateServiceForm = (FormData: ServiceInterface) => new Promise((resolve, reject) => {
     //Verifica se os campos estão vazios
-    if (!FormData.title || !FormData.description || !FormData.place || !FormData.created_date || !FormData.requester) {
+    if (!FormData.title || !FormData.description || !FormData.place || !FormData.created_date || !FormData.requester || !FormData.workstationid) {
         reject("Nenhum campo deve estar vazio")
         return
     }
@@ -25,13 +25,14 @@ export const ValidateServiceForm = (FormData: ServiceInterface) => new Promise((
         created_date: FormData.created_date,
         requester: FormData.requester,
         priority: FormData.priority,
+        workstationid: FormData.workstationid,
         status: 0
     } as ServiceInterface
     resolve(NewData)
     return;
 })
 
-export const ValidateCadForm = (userData: UserInterface, PassEncrypt: Boolean) => new Promise((resolve, reject) => {
+export const ValidateCadForm = (userData: UserInterface) => new Promise((resolve, reject) => {
     // Verifica campos vazios
     if (!userData.first_name || !userData.last_name || !userData.email || !userData.password) {
         reject("Nenhum campo deve estar vazio! retornou aqui");
