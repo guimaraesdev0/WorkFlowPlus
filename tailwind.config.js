@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        'phone': '375px',
+      },
       backgroundSize: {
         'size-200': '200% 200%',
       },

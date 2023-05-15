@@ -45,16 +45,16 @@ export default function Register() {
             })
     }
     return (
-        <div className='flex flex-row items-center justify-center w-screen h-screen py-32 space-x-10'>
+        <div className='flex flex-row items-center justify-center w-screen h-screen lg:py-32 space-x-10'>
             <>
                 <Head>
                     <title>WorkSpace Plus - Registro</title>
                 </Head>
             </>
             <div>
-                <img src='/auth.svg' className='sm:w-[38rem] ' />
+                <img src='/auth.svg' className='sm:w-[38rem] hidden lg:inline' />
             </div>
-            <form onSubmit={HandleSubmit} className="flex flex-col justify-center items-center w-[35rem] h-[50rem] p-14 space-y-4">
+            <form onSubmit={HandleSubmit} className="flex flex-col justify-center items-center mx-auto w-80 lg:w-[35rem] lg:h-[50rem] lg:p-14 space-y-4">
                 <AiOutlineCodepenCircle size={120} />
                 <span className='font-bold text-5xl'>Register</span>
                 {/*                 <div className=' w-full h-min-14 h-auto  rounded py-3 pl-4 font-semibold bg-green-500'>Mensagem de sucesso mensagem de sucesso mensagem de sucesso</div>

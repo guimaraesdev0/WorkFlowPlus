@@ -7,7 +7,6 @@ export interface UserInterface {
     image: string;
     features: {
         administrator?: boolean;
-        role: "senior" | "worker" | "guest"
     };
 }
 

@@ -18,7 +18,8 @@ export class user {
                         reject(err)
                     } else {
                         userData.password = hash
-                        userData.features = { role: "guest", administrator: false }
+                        userData.features = { administrator: false }
+                        userData.image = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                         try {
                             await addDoc(collection(db, "users"), userData)
                             resolve(true)
@@ -31,23 +32,6 @@ export class user {
         })
     })
     
-    changeUserRole = (userData:{id:string, role: "senior" | "worker" | "guest"}) => new Promise(async (resolve, reject) => {
-        if (userData.role != "senior" && userData.role != "worker" && userData.role != "guest") {
-            reject("Role does not match");
-        }else{
-            const docRef = doc(db, 'users', userData.id)
-            updateDoc(docRef, {
-                features:{role: userData.role}
-            }).then(() => {
-                resolve(true)
-            })
-            .catch((error) => {
-                reject(error)
-            })
-        }
-
-    })
-
     removeUser = (data: { userid: string, reason: string }) => new Promise(async (resolve, reject) => {
         await deleteDoc(doc(db, "users", data.userid))
             .then(() => {
@@ -89,9 +73,40 @@ export class user {
                 const passwordMatch = await bcrypt.compare(userData.password, userDataFromDb.password);
                 if (passwordMatch) {
                     // Retorna o objeto com o ID do documento
+                    console.log(userDataFromDb)
                     resolve({ ...userDataFromDb, id: querySnapshot.docs[0].id });
                     return;
                 }
+            }
+            reject("Email ou senha inválidos");
+            return;
+        } catch (error) {
+            reject('Erro ao procurar usuário: ' + error);
+            return;
+        }
+    });
+    getUserByEmail = (email: string) => new Promise(async (resolve, reject) => {
+        // Verifica campos vazios
+        if (!email || !email) {
+            reject("Nenhum campo deve estar vazio!");
+            return;
+        }
+
+        // Verifica a autenticidade do email fornecido pelo usuário
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        if (!emailRegex.test(email)) {
+            reject("Email inválido");
+            return;
+        }
+
+        try {
+            const q = query(collection(db, 'users'), where('email', '==', email));
+            const querySnapshot = await getDocs(q);
+            if (!querySnapshot.empty) {
+                const userDataFromDb = querySnapshot.docs[0].data() as UserInterface;
+                    console.log(userDataFromDb)
+                    resolve({ ...userDataFromDb, id: querySnapshot.docs[0].id });
+                    return;
             }
             reject("Email ou senha inválidos");
             return;

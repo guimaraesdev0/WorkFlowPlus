@@ -1,20 +1,19 @@
 
 import { UserInterface } from "@/models";
-import NextAuth , {NextAuthOptions} from "next-auth"
+import NextAuth, { NextAuthOptions, User } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { userController } from "@/controller";
 
-
 const authOptions: NextAuthOptions = {
-    session:{
+    session: {
         strategy: 'jwt'
     },
-    providers:[
+    providers: [
         CredentialsProvider({
             type: 'credentials',
             credentials: {},
             authorize: async (credentials, req) => {
-                const {email, password} = credentials as {
+                const { email, password } = credentials as {
                     email: string;
                     password: string;
                 }
@@ -27,9 +26,18 @@ const authOptions: NextAuthOptions = {
             }
         })
     ],
-    pages:{
+    pages: {
         signIn: "/AuthPages/login",
+        
     },
+    callbacks: {
+        async session({ session, user, token }) {
+            const userDataFromDb = await userController.getUserByEmail(session.user.email) as UserInterface;
+            session.user = userDataFromDb;
+            session.user.password = ""
+            return session
+        }
+    }
 }
 
 export default NextAuth(authOptions)

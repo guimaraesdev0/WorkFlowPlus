@@ -3,13 +3,14 @@ import Head from 'next/head'
 import { FormEventHandler, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { stringify } from 'querystring';
+import { useRouter } from 'next/router';
+
 
 export default function Login() {
+    const router = useRouter()
     const [errormsg, setError] = useState<string>();
     const [successmsg, setsucessmsg] = useState<string>();
-
     const [UserData, setUserData] = useState({ email: "", password: "" });
-
 
     const HandleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
@@ -19,10 +20,13 @@ export default function Login() {
             password: UserData.password,
             redirect: false
         })
-        console.log(res)
         if (res?.error) {
             setError(res?.error)
+        }else{
+            setsucessmsg('Logado com sucesso')
+            setError('')
         }
+
 
 
     }
@@ -43,6 +47,11 @@ export default function Login() {
                 {errormsg && (
                     <div className='w-full h-min-14 h-auto rounded py-3 pl-4 font-semibold transition-opacity bg-red-500'>
                         {errormsg}
+                    </div>
+                )}
+                {successmsg && (
+                    <div className='w-full h-min-14 h-auto rounded py-3 pl-4 font-semibold transition-opacity bg-green-500'>
+                        {successmsg}
                     </div>
                 )}
                 <div className='w-full'>

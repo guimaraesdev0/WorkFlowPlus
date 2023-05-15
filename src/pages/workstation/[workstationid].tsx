@@ -13,7 +13,9 @@ import ServiceList from "../components/ServiceList";
 import SupportMenu from "../components/supportMenu";
 import api from "@/services/api.service";
 import { useRouter } from "next/router";
-import { workstationController } from "@/controller";
+import { useSession } from "next-auth/react";
+import withAuth from "../components/withAuth";
+
 
 interface Props {
     services: ServiceInterface[];
@@ -22,6 +24,7 @@ interface Props {
 
 
 const Home: NextPage<Props> = ({ services, totalPages }: Props) => {
+    const {status, data} = useSession();
     const router = useRouter()
     const workstationid = router.query.workstationid as string;
     /* useState do WinboxJs */
@@ -32,13 +35,13 @@ const Home: NextPage<Props> = ({ services, totalPages }: Props) => {
     const [OpenSupportWindow, setSupportOpen] = useState(false)
     const [WinboxColor, setWinboxColor] = useState<string>()
     /* Configurações do workstation */
-    const [backgroundTheme, setbackgroundTheme] = useState("bg-gradient-to-r from-blue-800 to-indigo-900")
-
+    const [backgroundTheme, setbackgroundTheme] = useState("bg-gradient-to-bl from-slate-800 via-slate-900 to-slate-900")
+    
     return (
         <div className={"flex antialised " + backgroundTheme + " transition"}>
             <>
-                <Head>
-                    <title>{workstationid}</title>
+                <Head>e
+                    <title>Workstation</title>
                 </Head>
             </>
             <div>
@@ -208,7 +211,7 @@ const Home: NextPage<Props> = ({ services, totalPages }: Props) => {
 
 
                         </div>
-
+                        
                     </WinBox>
                 )}
             </div>
@@ -220,12 +223,13 @@ const Home: NextPage<Props> = ({ services, totalPages }: Props) => {
 
 export default Home
 
+
 // essa função é executada no servidor e retorna as propriedades iniciais para a página
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { workstationid } = context.query;
 
     if (workstationid == undefined) {
-         
+        
     }
 
     const { data } = await api.get(`/services?workstationId=${workstationid}`);

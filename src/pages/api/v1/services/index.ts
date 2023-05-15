@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   }
 
-  if (req.method === 'GET') {
+  if (req.method == 'GET') {
     try {
       const page = Number(req.query.page) || 1;
       const limit = Number(req.query.limit) || PAGE_SIZE;

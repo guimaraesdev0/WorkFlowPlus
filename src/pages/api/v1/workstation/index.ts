@@ -6,7 +6,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method == "POST") {
         try {
-            const body: { email: string, workstation_id: string } = req.body;
+            const body: { email: string } = req.body;
             workstationController.addWorkstation(body.email).then((success) => {
                 res.status(200).json(success)
             })
