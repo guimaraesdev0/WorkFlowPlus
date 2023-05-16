@@ -19,6 +19,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method == "GET") {
         const action = req.query.action;
 
+        if (action == "getAllWorkstationUserByEmail"){
+            try {
+                const user_email = String(req.query.user_email)
+                const snapshot = workstationController.getAllWorkstation(user_email).then((success) => {
+                    res.status(200).json(success)
+                })
+                
+            } catch (error) {
+                res.status(500).json({ message: `Ocorreu um erro`, error: error })
+            }
+        }
         if (action == "validateWorkstationById") {
             try {
                 const workstationid = String(req.query.workstationid);

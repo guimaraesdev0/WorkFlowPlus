@@ -1,7 +1,7 @@
 import { Workstation } from '@/models';
-import { db, addDoc, getDocs, getDoc, updateDoc, doc, collection, query, orderBy, where, deleteDoc } from './firebaseClient.service';
+import { db, addDoc, getDocs, getDoc, updateDoc, doc, collection, query, orderBy, where, deleteDoc, QuerySnapshot } from './firebaseClient.service';
 import { generateWorkstationInviteCode } from './generatecode.service';
-import { arrayUnion } from 'firebase/firestore';
+import { DocumentData, arrayUnion } from 'firebase/firestore';
 
 export class workstation {
     addWorkstation = (user_email: string) => new Promise(async (resolve, reject) => {
@@ -76,19 +76,37 @@ export class workstation {
         }
     });
 
-    validateWorkstationById = (workstation_id:any) => new Promise(async (resolve, reject) => {
+    getAllWorkstation = async (email: string) => {
         try {
-          const workstationDocRef = doc(db, "workstations", workstation_id);
-          const docSnapshot = await getDoc(workstationDocRef);
-          if (docSnapshot.exists()) {
-            // Foi encontrado um documento com o ID informado
-            resolve(true);
-          } else {
-            // Não foi encontrado um documento com o ID informado
-            resolve(false);
+            const workstationRef = collection(db, 'workstation');
+            const workstationQuery = query(workstationRef);
+            const workstationSnapshot = await getDocs(workstationQuery);
+            
+            const workstations = workstationSnapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+        
+            return workstations;
+          } catch (error) {
+            throw error;
           }
+    }
+
+
+    validateWorkstationById = (workstation_id: any) => new Promise(async (resolve, reject) => {
+        try {
+            const workstationDocRef = doc(db, "workstation", workstation_id);
+            const docSnapshot = await getDoc(workstationDocRef);
+            if (docSnapshot.exists()) {
+                // Foi encontrado um documento com o ID informado
+                resolve(true);
+            } else {
+                // Não foi encontrado um documento com o ID informado
+                resolve(false);
+            }
         } catch (error) {
-          reject(error);
+            reject(error);
         }
-      })
+    })
 }

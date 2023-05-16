@@ -1,10 +1,10 @@
-import Head from 'next/head'
-import { FormEventHandler, useState } from 'react'
-import { UserInterface } from '@/models'
-import { AiOutlineCodepenCircle } from 'react-icons/ai'
+import Head from "next/head"
+import { FormEventHandler, useState } from "react"
+import { UserInterface } from "@/models"
+import { AiOutlineCodepenCircle } from "react-icons/ai"
 import { signIn } from "next-auth/react";
-import axios from 'axios'
-import { toast } from 'react-toastify'
+import axios from "axios"
+import { toast } from "react-toastify"
 
 
 export default function Register() {
@@ -17,10 +17,10 @@ export default function Register() {
         e.preventDefault()
 
         const options = {
-            method: 'POST',
-            url: '/api/v1/users',
+            method: "POST",
+            url: "/api/v1/users",
             headers: {
-                'content-type': 'application/json',
+                "content-type": "application/json",
             },
             data:
             {
@@ -34,7 +34,7 @@ export default function Register() {
         await axios
             .request(options)
             .then(async res => {
-                const resLogIn = await signIn('credentials', {
+                const resLogIn = await signIn("credentials", {
                     email: UserData.UserEmail,
                     password: UserData.UserPassword,
                     redirect: false
@@ -45,78 +45,78 @@ export default function Register() {
             })
     }
     return (
-        <div className='flex flex-row items-center justify-center w-screen h-screen lg:py-32 space-x-10'>
+        <div className="flex flex-row items-center justify-center w-screen h-screen lg:py-32 space-x-10">
             <>
                 <Head>
                     <title>WorkSpace Plus - Registro</title>
                 </Head>
             </>
             <div>
-                <img src='/auth.svg' className='sm:w-[38rem] hidden lg:inline' />
+                <img src="/auth.svg" className="sm:w-[38rem] hidden lg:inline" />
             </div>
             <form onSubmit={HandleSubmit} className="flex flex-col justify-center items-center mx-auto w-80 lg:w-[35rem] lg:h-[50rem] lg:p-14 space-y-4">
                 <AiOutlineCodepenCircle size={120} />
-                <span className='font-bold text-5xl'>Register</span>
-                {/*                 <div className=' w-full h-min-14 h-auto  rounded py-3 pl-4 font-semibold bg-green-500'>Mensagem de sucesso mensagem de sucesso mensagem de sucesso</div>
+                <span className="font-bold text-5xl">Register</span>
+                {/*                 <div className=" w-full h-min-14 h-auto  rounded py-3 pl-4 font-semibold bg-green-500">Mensagem de sucesso mensagem de sucesso mensagem de sucesso</div>
  */}
 
                 {errormsg && (
-                    <div className='w-full h-min-14 h-auto rounded py-3 pl-4 font-semibold transition-opacity bg-red-500 '>
+                    <div className="w-full h-min-14 h-auto rounded py-3 pl-4 font-semibold transition-opacity bg-red-500 ">
                         {errormsg}
                     </div>
                 )}
 
 
-                <div className='w-full'>
+                <div className="w-full">
                     <input
-                        type='text'
-                        placeholder='Nome'
-                        className='formInput'
+                        type="text"
+                        placeholder="Nome"
+                        className="formInput"
                         value={UserData.UserFirstName}
                         onChange={({ target }) => setUserData({ ...UserData, UserFirstName: target.value })}
                     />
                 </div>
-                <div className='w-full'>
+                <div className="w-full">
                     <input
-                        type='text'
+                        type="text"
 
-                        placeholder='Sobrenome'
-                        className='formInput'
+                        placeholder="Sobrenome"
+                        className="formInput"
                         onChange={({ target }) => setUserData({ ...UserData, UserLastname: target.value })}
                     />
                 </div>
-                <div className='w-full'>
+                <div className="w-full">
                     <input
-                        type='email'
-                        placeholder='email'
-                        className='formInput'
+                        type="email"
+                        placeholder="email"
+                        className="formInput"
 
                         value={UserData.UserEmail}
                         onChange={({ target }) => setUserData({ ...UserData, UserEmail: target.value })}
                     />
                 </div>
-                <div className='w-full'>
+                <div className="w-full">
                     <input
-                        type='password'
-                        placeholder='Senha'
-                        className='formInput'
+                        type="password"
+                        placeholder="Senha"
+                        className="formInput"
 
                         value={UserData.UserPassword}
                         onChange={({ target }) => setUserData({ ...UserData, UserPassword: target.value })}
                     />
                 </div>
-                <div className='w-full'>
+                <div className="w-full">
                     <input
-                        type='password'
-                        placeholder='Confirme senha'
+                        type="password"
+                        placeholder="Confirme senha"
 
-                        className='formInput'
+                        className="formInput"
                         value={UserData.UserPasswordRepeat}
                         onChange={({ target }) => setUserData({ ...UserData, UserPasswordRepeat: target.value })}
                     />
                 </div>
-                <button className='w-full h-12 bg-gradient-to-r from-sky-400 to-sky-500 rounded-lg shadow-lg font-bold text-lg'>register</button>
-                <span className='text-sm text-zinc-600'>Já possui uma conta? Clique <a href='/auth/login' className='text-sky-500 hover:text-sky-600 visited:text-sky-500'>aqui</a></span>
+                <button className="w-full h-12 bg-gradient-to-r from-sky-400 to-sky-500 rounded-lg shadow-lg font-bold text-lg">register</button>
+                <span className="text-sm text-zinc-600">Já possui uma conta? Clique <a href="/auth/login" className="text-sky-500 hover:text-sky-600 visited:text-sky-500">aqui</a></span>
             </form>
         </div>
     )

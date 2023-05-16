@@ -71,8 +71,8 @@ const Home: NextPage<Props> = ({ services, totalPages }: Props) => {
                         noMax={false}
                         noFull={true}
                         noClose={false}
-                        width={1500}
-                        height={500}
+                        width={Math.min(document.body.clientWidth, 700)}
+                        height={Math.min(document.body.clientHeight, 500)}
                         x="center"
                         y="center"
                         top={0}
@@ -81,7 +81,7 @@ const Home: NextPage<Props> = ({ services, totalPages }: Props) => {
                         left={64}
                         hide={false}
                         background={WinboxColor}
-                        className={''}
+                        className={'rounded'}
                         onclose={() => {
                             // destroying actions while `onclose` must be wrapped within `setTimeout`
                             setTimeout(() => {
@@ -100,7 +100,7 @@ const Home: NextPage<Props> = ({ services, totalPages }: Props) => {
                         noMax={false}
                         noFull={true}
                         noClose={false}
-                        width={1500}
+                        width={1100}
                         height={500}
                         x="center"
                         y="center"

@@ -2,15 +2,17 @@ import { NextPage } from "next"
 import Router from "next/router"
 import LandpageNavbar from "./components/NavBar/LandpageNavbar"
 import { GiThink } from "react-icons/gi"
+import Head from "next/head"
+
 
 const Home: NextPage = () => {
   return (
     <div>
+      <Head><title>WorkflowPlus - Ferramente de ordem de serviço</title></Head>
       <div className=""></div>
       <LandpageNavbar />
       <div className="flex flex-col w-full items-center p-2 sm:space-y-12 space-y-2 lg:space-y-5">
-        <div className="w-[115px] h-[115px] blur-[115px] animate-button-1 sm:h-[300px] sm:w-[300px] sm:blur-[300px] bg-sky-600 -z-10 absolute"></div>
-        <div className="w-[115px] h-[115px] blur-[115px] animate-button-2 sm:h-[300px] sm:w-[300px] sm:blur-[300px] bg-green-800 -z-10 absolute"></div>
+        <div className="w-[115px] h-[115px] blur-[115px] animate-button-1 sm:h-[300px] sm:w-[300px] sm:blur-[300px] bg-sky-400 -z-20 absolute"></div>
         <div className="flex flex-col items-center">
           <p className="mx-auto text-base sm:text-lg lg:pt-12">Bem vindo ao  <span className="text-sky-400">WorkFlow+</span></p>
           <p className="font-bold text-center text-3xl w-96 sm:text-5xl lg:text-6xl sm:w-[45rem] lg:w-[65rem] align-center whitespace-wrap mb-5 sm:mb-20 mt-5 sm:mt-16 lg:mb-12 lg:mt-0 sm:font-extrabold">Sua ferramenta empresarial de  <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-tr from-indigo-400 to-cyan-400">organização</span> interna!</p>
@@ -19,7 +21,7 @@ const Home: NextPage = () => {
         <div className="flex space-x-3 mt-20">
           <button className="mt-10 w-44 h-12 sm:w-64 sm:h-14 text-base sm:text-lg font-semibold rounded ring-cyan-500 transition-all duration-500 ease-in-out bg-gradient-to-tl from-cyan-400 via-sky-500 to-blue-500 bg-size-200 bg-pos-0 hover:bg-pos-100 sm:mt-0 sm:items-center" onClick={() => { Router.push("/auth/register") }}>  Começar agora</button>
         </div>
-        <div className="w-[115px] h-[115px] blur-[115px] animate-button-1 sm:h-[300px] sm:w-[300px] sm:blur-[300px] bg-rose-800 -z-10 absolute"></div>
+        <div className="self-end w-[115px] h-[115px] blur-[115px] animate-button-2 sm:h-[300px] sm:w-[300px] sm:blur-[300px] bg-rose-800 -z-10 absolute"></div>
       </div>  
       {/* <div className="h-32 mt-16 bg-zinc-900 sm:h-24">
         <div  >
