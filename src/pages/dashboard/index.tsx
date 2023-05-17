@@ -8,10 +8,14 @@ import api from "@/services/api.service";
 import NextAuth, { getServerSession } from "next-auth/next";
 import { authOptions } from '../api/auth/[...nextauth]'
 import { workstation } from "@/services/workstations.service";
+import { signOut } from "next-auth/react"
+import { useRouter } from 'next/router';
+import { NextApiRequest, NextApiResponse } from "next";
+
 
 
 interface props {
-    workstation: Workstation,
+    workstation: Workstation[],
     userData: UserInterface,
     teste: string
 }
@@ -44,12 +48,20 @@ export default function DashboardPage(Props: props) {
                         <button className='w-36 h-10 bg-sky-400 rounded-full font-semibold'>Criar workstation</button>
                     </div>
                 </div>
-                <button className='ml-auto mr-4 mt-4 w-20 h-10 bg-red-500 rounded-full font-semibold'>Sair</button>
+                <button className='ml-auto mr-4 mt-4 w-20 h-10 bg-red-500 rounded-full font-semibold' onClick={() => signOut()}>Sair</button>
             </div>
             <div className='flex flex-wrap justify-center overflow-y-scroll h-auto max-h-none w-screen p-4 gap-4'>
-                <WorkstationCard />
-                <WorkstationCard />
-                <WorkstationCard />
+                {
+                    Props.workstation.map((service: Workstation) => {
+                        return (
+                            <div>
+                            <WorkstationCard  />
+                            <h1>{service.id}</h1>    
+                            </div>
+
+                        )
+                    })
+                }
             </div>
         </div>
     )
@@ -57,6 +69,13 @@ export default function DashboardPage(Props: props) {
 
 export async function getServerSideProps(context:any) {
     const session = await getServerSession(context.req, context.res, authOptions)
+    if (!session) {
+        context.res.setHeader('Location', '/auth/logoff')
+        context.res.statusCode = 302
+        context.res.end()
+        return { props: {} }
+    }
+
     const workstationData = await api.get(`/workstation?action=getAllWorkstationUserByEmail&email=${session?.user.email}`)
     const array = workstationData.data as Workstation
     console.log(array)

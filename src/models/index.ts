@@ -30,6 +30,7 @@ export interface Collaborator {
 }
 
 export interface Workstation {
+    map(): import("react").ReactNode;
     id: string;
     collaborators: {
         whitelist: boolean;

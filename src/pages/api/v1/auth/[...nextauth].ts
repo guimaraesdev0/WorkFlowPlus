@@ -31,7 +31,7 @@ const authOptions: NextAuthOptions = {
     ],
     pages:{
         signIn: "/AuthPages/login",
-        
+        signOut: "/AuthPages/logoff"
     },
 }
 
