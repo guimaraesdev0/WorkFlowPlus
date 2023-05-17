@@ -104,7 +104,6 @@ export class user {
             const querySnapshot = await getDocs(q);
             if (!querySnapshot.empty) {
                 const userDataFromDb = querySnapshot.docs[0].data() as UserInterface;
-                    console.log(userDataFromDb)
                     resolve({ ...userDataFromDb, id: querySnapshot.docs[0].id });
                     return;
             }

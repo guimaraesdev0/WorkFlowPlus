@@ -76,21 +76,21 @@ export class workstation {
         }
     });
 
-    getAllWorkstation = async (email: string) => {
+    getAllWorkstation = async () => {
         try {
             const workstationRef = collection(db, 'workstation');
             const workstationQuery = query(workstationRef);
             const workstationSnapshot = await getDocs(workstationQuery);
-            
+
             const workstations = workstationSnapshot.docs.map((doc) => ({
-              id: doc.id,
-              ...doc.data(),
+                id: doc.id,
+                ...doc.data(),
             }));
-        
+
             return workstations;
-          } catch (error) {
+        } catch (error) {
             throw error;
-          }
+        }
     }
 
 

@@ -31,6 +31,10 @@ export interface Collaborator {
 
 export interface Workstation {
     id: string;
+    collaborators: {
+        whitelist: boolean;
+        manager?: boolean;
+        email: string;
+    }[];
     code: string;
-    collaborators: Collaborator[];
 }

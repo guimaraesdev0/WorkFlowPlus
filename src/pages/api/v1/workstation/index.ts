@@ -2,6 +2,7 @@
 //By GuimaSpace
 import { workstationController } from '@/controller'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { Workstation } from '@/models';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method == "POST") {
@@ -18,18 +19,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (req.method == "GET") {
         const action = req.query.action;
-
-        if (action == "getAllWorkstationUserByEmail"){
+        if (action == "getAllWorkstationUserByEmail") {
             try {
-                const user_email = String(req.query.user_email)
-                const snapshot = workstationController.getAllWorkstation(user_email).then((success) => {
-                    res.status(200).json(success)
-                })
-                
+                const email = String(req.query.email);
+                const data:Workstation[] = await workstationController.getAllWorkstation() as Workstation[];
+                const filteredData = data.filter(workstation => workstation.collaborators.some(collaborator => collaborator.email === email));
+                res.status(200).json(filteredData)
             } catch (error) {
-                res.status(500).json({ message: `Ocorreu um erro`, error: error })
+                res.status(500).json({ error: 'ocorreu um erro' })
             }
         }
+
         if (action == "validateWorkstationById") {
             try {
                 const workstationid = String(req.query.workstationid);
@@ -41,7 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         if (action == null) {
-            res.status(500).json({ message: 'Invalid action.'})
+            res.status(500).json({ message: 'Invalid action.' })
         }
     }
 
@@ -60,8 +60,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         if (body.action == "updateWhitelistUser") {
             try {
-                const body: {email:string, workstation_id:string, whitelist: boolean} = req.body;
-                await workstationController.updateWhitelistUser(body.email, body.workstation_id, body.whitelist);               
+                const body: { email: string, workstation_id: string, whitelist: boolean } = req.body;
+                await workstationController.updateWhitelistUser(body.email, body.workstation_id, body.whitelist);
             } catch (error) {
                 res.status(500).json({ error: 'ocorreu um erro' })
             }
@@ -69,9 +69,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         if (body.action == "updateManagerUser") {
             try {
-                const body: {email:string, workstation_id:string, manager:boolean} = req.body;
+                const body: { email: string, workstation_id: string, manager: boolean } = req.body;
                 await workstationController.updateManagerUser(body.email, body.workstation_id, body.manager)
-                res.status(200).json({ success: 'Ocorreu tudo certo'})
+                res.status(200).json({ success: 'Ocorreu tudo certo' })
             } catch (error) {
                 res.status(500).json({ error: 'ocorreu um erro ' + error })
             }
