@@ -41,6 +41,8 @@ API'S of service and user and Authentication using Next-Auth, started to be deve
 
 ``
 Env File: 
+
+# Firebase 
 FIREBASE_CLIENT_EMAIL=
 FIREBASE_PRIVATE_KEY=
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=
@@ -48,5 +50,12 @@ NEXT_PUBLIC_FIREBASE_API_KEY_ID=
 NEXT_PUBLIC_FIREBASE_APP_ID=
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
 NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=
+
+# Next Auth Config  
+NEXTAUTH_URL=http://localhost:3000/api/auth
+NEXTAUTH_SECRET=secretinhouwu
+
+# Pinterest API
+
 ``
 
