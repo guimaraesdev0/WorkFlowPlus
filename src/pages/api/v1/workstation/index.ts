@@ -7,8 +7,8 @@ import { Workstation } from '@/models';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method == "POST") {
         try {
-            const body: { email: string } = req.body;
-            workstationController.addWorkstation(body.email).then((success) => {
+            const body: { email: string, workstationName : string, description: string, image: string } = req.body;
+            workstationController.addWorkstation(body).then((success) => {
                 res.status(200).json(success)
             })
 

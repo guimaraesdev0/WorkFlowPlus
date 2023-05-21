@@ -1,6 +1,6 @@
 import WorkstationCard from "../components/dashboard/WorkStationCard"
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import Router from "next/router";
 import Head from "next/head";
 import { Workstation, UserInterface } from "@/models";
@@ -11,6 +11,7 @@ import { workstation } from "@/services/workstations.service";
 import { signOut } from "next-auth/react"
 import { useRouter } from 'next/router';
 import { NextApiRequest, NextApiResponse } from "next";
+import Link from "next/link";
 
 
 
@@ -53,10 +54,12 @@ export default function DashboardPage(Props: props) {
             <div className='flex flex-wrap justify-center overflow-y-scroll h-auto max-h-none w-screen p-4 gap-4'>
                 {
                     Props.workstation.map((service: Workstation) => {
+                        let url = `/workstation/${service.id}`
                         return (
                             <div>
-                            <WorkstationCard  />
-                            <h1>{service.id}</h1>    
+                            <Link href={url}>
+                              <WorkstationCard />  
+                            </Link>
                             </div>
 
                         )

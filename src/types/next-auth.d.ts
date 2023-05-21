@@ -7,6 +7,5 @@ declare module "next-auth" {
      */
     interface Session {
         user:UserInterface & DefaultSession["user"]
-        token:UserInterface & DefaultSession["token"]
     }
 }

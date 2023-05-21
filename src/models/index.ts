@@ -32,6 +32,9 @@ export interface Collaborator {
 export interface Workstation {
     map(): import("react").ReactNode;
     id: string;
+    workstationName: string;
+    description: string;
+    image: string;
     collaborators: {
         whitelist: boolean;
         manager?: boolean;

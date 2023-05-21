@@ -4,13 +4,17 @@ import { generateWorkstationInviteCode } from './generatecode.service';
 import { DocumentData, arrayUnion } from 'firebase/firestore';
 
 export class workstation {
-    addWorkstation = (user_email: string) => new Promise(async (resolve, reject) => {
+    addWorkstation = (data: {email: string, workstationName: string, description: string, image: string}) => new Promise(async (resolve, reject) => {
         try {
+            console.log(data)
             const worstationCode = generateWorkstationInviteCode();
             addDoc(collection(db, "workstation"), {
                 code: worstationCode,
+                workstationName: data.workstationName,
+                description: data.description,
+                image: data.image,
                 collaborators: [
-                    { email: user_email, manager: true, whitelist: true }
+                    { email: data.email, manager: true, whitelist: true }
                 ]
             });
             resolve({ message: 'O Workstation foi criado com sucesso', invite_code: worstationCode });
