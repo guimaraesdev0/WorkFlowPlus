@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method == 'POST') {
     try {
       const userData = req.body
-      const trustedUserData = await ValidateCadForm(userData, true) as UserInterface; //Envia a filtragem de dados, as interface informa os valores pré definido de retorno.
+      const trustedUserData = await ValidateCadForm(userData) as UserInterface; //Envia a filtragem de dados, as interface informa os valores pré definido de retorno.
 
       //Verifica se o email existe
       if (await userController.verifyUserEmail(trustedUserData.email)) {

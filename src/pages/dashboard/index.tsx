@@ -1,17 +1,15 @@
 import WorkstationCard from "../components/dashboard/WorkStationCard"
 import { useSession } from "next-auth/react";
-import { ReactNode, useEffect } from "react";
+import { useEffect } from "react";
 import Router from "next/router";
 import Head from "next/head";
 import { Workstation, UserInterface } from "@/models";
 import api from "@/services/api.service";
-import NextAuth, { getServerSession } from "next-auth/next";
+import { getServerSession } from "next-auth/next";
 import { authOptions } from '../api/auth/[...nextauth]'
-import { workstation } from "@/services/workstations.service";
 import { signOut } from "next-auth/react"
-import { useRouter } from 'next/router';
-import { NextApiRequest, NextApiResponse } from "next";
 import Link from "next/link";
+import LandpageNavbar from "../components/NavBar/LandpageNavbar";
 
 
 
@@ -30,14 +28,13 @@ export default function DashboardPage(Props: props) {
             Router.replace("/auth/login?error")
         }
     }, [status])
-    console.log(Props.workstation)
 
     return (
-        
+
         <div className='flex flex-col w-screen h-screen'>
             <>
                 <Head>
-                    <title>Workflow+</title>
+                    <title>Dashboard WorkFlow+</title>
                 </Head>
             </>
             <div className='flex justify-center w-screen h-72 border-b-2 border-neutral-800 '>
@@ -57,9 +54,9 @@ export default function DashboardPage(Props: props) {
                         let url = `/workstation/${service.id}`
                         return (
                             <div>
-                            <Link href={url}>
-                              <WorkstationCard />  
-                            </Link>
+                                <Link href={url}>
+                                    <WorkstationCard />
+                                </Link>
                             </div>
 
                         )
@@ -70,7 +67,7 @@ export default function DashboardPage(Props: props) {
     )
 }
 
-export async function getServerSideProps(context:any) {
+export async function getServerSideProps(context: any) {
     const session = await getServerSession(context.req, context.res, authOptions)
     if (!session) {
         context.res.setHeader('Location', '/auth/logoff')
@@ -81,7 +78,6 @@ export async function getServerSideProps(context:any) {
 
     const workstationData = await api.get(`/workstation?action=getAllWorkstationUserByEmail&email=${session?.user.email}`)
     const array = workstationData.data as Workstation
-    console.log(array)
     return {
         props: {
             workstation: array,

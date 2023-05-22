@@ -1,10 +1,12 @@
 import Head from "next/head"
-import { FormEventHandler, useState } from "react"
+import { FormEventHandler, useEffect, useState } from "react"
 import { UserInterface } from "@/models"
 import { AiOutlineCodepenCircle } from "react-icons/ai"
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import axios from "axios"
 import { toast } from "react-toastify"
+import { Router, useRouter } from "next/router";
+import LandpageNavbar from "../components/NavBar/LandpageNavbar";
 
 
 export default function Register() {
@@ -12,6 +14,15 @@ export default function Register() {
 
     const [UserData, setUserData] = useState({ UserFirstName: "", UserLastname: "", UserEmail: "", UserPassword: "", UserPasswordRepeat: "" })
     const [errormsg, setError] = useState();
+    const { status } = useSession();
+    const router = useRouter()
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            router.replace("/dashboard/")
+        }
+    }, [status])
+
 
     const HandleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
@@ -45,15 +56,14 @@ export default function Register() {
             })
     }
     return (
-        <div className="flex flex-row items-center justify-center w-screen h-screen lg:py-32 space-x-10">
+            <div>
             <>
                 <Head>
                     <title>WorkSpace Plus - Registro</title>
                 </Head>
             </>
-            <div>
-                <img src="/auth.svg" className="sm:w-[38rem] hidden lg:inline" />
-            </div>
+            
+        <div className="flex flex-row items-center justify-center w-screen h-screen lg:py-32 space-x-10">
             <form onSubmit={HandleSubmit} className="flex flex-col justify-center items-center mx-auto w-80 lg:w-[35rem] lg:h-[50rem] lg:p-14 space-y-4">
                 <AiOutlineCodepenCircle size={120} />
                 <span className="font-bold text-5xl">Register</span>
@@ -70,8 +80,9 @@ export default function Register() {
                 <div className="w-full">
                     <input
                         type="text"
-                        placeholder="Nome"
+                        placeholder="Seu nome"
                         className="formInput"
+                        required
                         value={UserData.UserFirstName}
                         onChange={({ target }) => setUserData({ ...UserData, UserFirstName: target.value })}
                     />
@@ -79,8 +90,8 @@ export default function Register() {
                 <div className="w-full">
                     <input
                         type="text"
-
-                        placeholder="Sobrenome"
+                        required
+                        placeholder="Seu sobrenome"
                         className="formInput"
                         onChange={({ target }) => setUserData({ ...UserData, UserLastname: target.value })}
                     />
@@ -88,9 +99,9 @@ export default function Register() {
                 <div className="w-full">
                     <input
                         type="email"
-                        placeholder="email"
+                        placeholder="Seu email"
                         className="formInput"
-
+                        required
                         value={UserData.UserEmail}
                         onChange={({ target }) => setUserData({ ...UserData, UserEmail: target.value })}
                     />
@@ -98,9 +109,9 @@ export default function Register() {
                 <div className="w-full">
                     <input
                         type="password"
-                        placeholder="Senha"
+                        placeholder="Sua senha (Minímo 6 characteres)"
                         className="formInput"
-
+                        required
                         value={UserData.UserPassword}
                         onChange={({ target }) => setUserData({ ...UserData, UserPassword: target.value })}
                     />
@@ -109,15 +120,21 @@ export default function Register() {
                     <input
                         type="password"
                         placeholder="Confirme senha"
-
+                        required
                         className="formInput"
                         value={UserData.UserPasswordRepeat}
                         onChange={({ target }) => setUserData({ ...UserData, UserPasswordRepeat: target.value })}
                     />
                 </div>
-                <button className="w-full h-12 bg-gradient-to-r from-sky-400 to-sky-500 rounded-lg shadow-lg font-bold text-lg">register</button>
-                <span className="text-sm text-zinc-600">Já possui uma conta? Clique <a href="/auth/login" className="text-sky-500 hover:text-sky-600 visited:text-sky-500">aqui</a></span>
+                <div className="w-full">
+                    <input type="checkbox" placeholder="Informe sua senha" className="" required id="TOS"/>
+                    <label htmlFor="TOS" className="ml-2">Eu li e concordo  com os <a href="TOS" className="hover:text-white hover:underline font-bold">Termos de Serviços</a> do Workflow</label>
+
+                </div>
+                <button className="w-full h-12 bg-gradient-to-r from-sky-500 to-sky-600 rounded-lg shadow-lg font-bold text-lg">Concluir o Cadastro</button>
+                <span className="text-sm text-white">Já possui uma conta? Clique <a href="/auth/login" className="text-sky-500 hover:text-sky-600 visited:text-sky-500 underline font-bold">aqui</a></span>
             </form>
+        </div>
         </div>
     )
 }

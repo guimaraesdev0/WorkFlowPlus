@@ -7,6 +7,9 @@ import { UserInterface } from '@/models/';
 import bcrypt from "bcrypt";
 
 export class user {
+    changeUserRole(data: { id: string; role: "senior" | "worker" | "guest"; }) {
+      throw new Error('Method not implemented.');
+    }
     /* Método que adiciona o usuario e faz a encriptação da senha usando Bcrypt */
     addUser = (userData: UserInterface) => new Promise(async (resolve, reject) => {
         bcrypt.genSalt(10, (err, salt) => {

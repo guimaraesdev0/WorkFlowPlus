@@ -8,24 +8,32 @@ import { BiHomeAlt2 } from 'react-icons/bi';
 import { RiSuitcaseLine } from 'react-icons/ri';
 import { MdSupportAgent } from 'react-icons/md';
 import { IoSettingsOutline } from 'react-icons/io5'
-import { ServiceInterface } from "@/models";
+import { ServiceInterface, UserInterface } from "@/models";
 import ServiceList from "../components/ServiceList";
 import SupportMenu from "../components/supportMenu";
 import api from "@/services/api.service";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import withAuth from "../components/withAuth";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 
 interface Props {
     services: ServiceInterface[];
     totalPages: number;
+    userData: UserInterface,
 }
 
 
-const Home: NextPage<Props> = ({ services, totalPages }: Props) => {
+const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
     const {status, data} = useSession();
     const router = useRouter()
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.replace("/auth/login?error")
+        }
+    }, [status])
     const workstationid = router.query.workstationid as string;
     /* useState do WinboxJs */
     /* Variaveis de janelas WinBox */
@@ -89,7 +97,7 @@ const Home: NextPage<Props> = ({ services, totalPages }: Props) => {
                             });
                         }}
                     >
-                        <ServiceList workstationid={workstationid} services={services} totalPages={totalPages} />
+                        <ServiceList workstationid={workstationid} services={services} totalPages={totalPages} userData={userData} />
                     </WinBox>
                 )}
 
@@ -228,6 +236,14 @@ export default Home
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { workstationid } = context.query;
 
+    const session = await getServerSession(context.req, context.res, authOptions)
+    if (session == undefined) {
+        context.res.setHeader('Location', '/auth/login')
+        context.res.statusCode = 302
+        context.res.end()
+        return { props: {} }
+    }
+
     if (workstationid == undefined) {
         
     }
@@ -236,7 +252,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
         props: {
             services: data.data,
-            totalPages: data.totalPages
+            totalPages: data.totalPages,
+            userData: session?.user
         }
     };
 };
+

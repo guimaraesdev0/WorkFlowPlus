@@ -1,3 +1,5 @@
+//export declare class
+
 import { user } from "@/services/user.service";
 import { service } from "@/services/services.service";
 import { workstation } from "@/services/workstations.service";

@@ -35,7 +35,7 @@ export const ValidateServiceForm = (FormData: ServiceInterface) => new Promise((
 export const ValidateCadForm = (userData: UserInterface) => new Promise((resolve, reject) => {
     // Verifica campos vazios
     if (!userData.first_name || !userData.last_name || !userData.email || !userData.password) {
-        reject("Nenhum campo deve estar vazio! retornou aqui");
+        reject("Nenhum campo deve estar vazio!");
         return;
     }
 

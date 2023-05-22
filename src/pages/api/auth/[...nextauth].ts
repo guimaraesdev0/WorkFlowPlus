@@ -2,6 +2,7 @@
 import { UserInterface } from "@/models";
 import NextAuth, { NextAuthOptions, User } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
+import Google from "next-auth/providers/google"
 import { userController } from "@/controller";
 
 export const authOptions: NextAuthOptions = {
@@ -24,11 +25,14 @@ export const authOptions: NextAuthOptions = {
                     throw new Error(`${JSON.stringify(err)}`);
                 }
             }
-        })
+        }),
+        Google({
+            clientId: process.env.GOOGLE_CLIENT_ID as string,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
+        }),
     ],
     pages: {
         signIn: "/AuthPages/login",
-        
     },
     callbacks: {
         async session({ session, user, token }) {

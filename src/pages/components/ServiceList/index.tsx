@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { ServiceInterface } from '@/models';
+import { ServiceInterface, UserInterface } from '@/models';
 import api from '../../../services/api.service';
 import axios from 'axios';
 
 interface Props {
     workstationid: string;
     services: ServiceInterface[];
+    userData: UserInterface,
     totalPages: number;
 }
 
 const PAGE_SIZE = 20;
 
-const ServiceList = ({ services, totalPages, workstationid }: Props) => {
+const ServiceList = ({ services, totalPages, workstationid, userData }: Props) => {
     const router = useRouter();
     const [currentPage, setCurrentPage] = useState(Number(router.query.page) || 1);
     const [limit] = useState(PAGE_SIZE);
