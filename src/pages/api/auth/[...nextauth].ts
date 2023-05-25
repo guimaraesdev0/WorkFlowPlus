@@ -6,6 +6,7 @@ import Google from "next-auth/providers/google"
 import { userController } from "@/controller";
 
 export const authOptions: NextAuthOptions = {
+    secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: 'jwt'
     },
