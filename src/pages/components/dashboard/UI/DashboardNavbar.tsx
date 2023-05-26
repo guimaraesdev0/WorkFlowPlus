@@ -1,4 +1,4 @@
-import createWorkstationModal from "./createWorkStationModal";
+import createWorkstationModal from "../createWorkstationModal";
 import { UserInterface, Workstation } from "@/models";
 import { useEffect, useRef, useState } from "react";
 
@@ -11,6 +11,7 @@ interface navProps {
 export default function DashboardNavbar(props: navProps) {
     const [showModal, setShowModal] = useState<boolean>(false)
     const modalRef = useRef<HTMLDivElement>(null);
+    const [test, setTest] = useState<string>("hello nigga")
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -49,7 +50,7 @@ export default function DashboardNavbar(props: navProps) {
 
             {showModal && (
                 <div ref={modalRef} className="absolute left-[35%] top-[20%]">
-                    {createWorkstationModal()}
+                    {createWorkstationModal(test)}
                 </div>
             )}
         </main>
