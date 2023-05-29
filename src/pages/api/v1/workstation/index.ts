@@ -30,6 +30,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
         }
 
+        if (action == "getWorkstationById") {
+            try {
+                const workstationId = String(req.query.workstationId)
+                await workstationController.getWorkstationbyID(workstationId).then((success) => {
+                    res.status(200).json(success)
+                }).then((error) => {
+                    
+                }) as Workstation
+            } catch (error) {
+                res.status(500).json({ error: 'ocorreu um erro' })
+            }
+        }
+
         if (action == "validateWorkstationById") {
             try {
                 const workstationid = String(req.query.workstationid);

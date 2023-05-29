@@ -24,7 +24,7 @@ export default function DashboardPage(props: props) {
                     return (
                         <div>
                             <Link href={url}>
-                                <WorkstationCard />
+                                <WorkstationCard workstationName={service.workstationName} workstationDesc={service.description}  />
                             </Link>
                         </div>
 

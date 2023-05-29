@@ -5,16 +5,15 @@ const WinBox = dynamic(() => import('react-winbox'), { ssr: false });
 import React, { useEffect, useRef, useState } from 'react';
 import Head from "next/head";
 import { BiHomeAlt2 } from 'react-icons/bi';
+import {FaUserFriends} from 'react-icons/fa'
 import { RiSuitcaseLine } from 'react-icons/ri';
-import { MdSupportAgent } from 'react-icons/md';
+import { RiArrowGoBackLine } from 'react-icons/ri';
 import { IoSettingsOutline } from 'react-icons/io5'
-import { ServiceInterface, UserInterface } from "@/models";
+import { ServiceInterface, UserInterface, Workstation } from "@/models";
 import ServiceList from "../components/ServiceList";
-import SupportMenu from "../components/supportMenu";
 import api from "@/services/api.service";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import withAuth from "../components/withAuth";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
 
@@ -22,12 +21,13 @@ import { authOptions } from "../api/auth/[...nextauth]";
 interface Props {
     services: ServiceInterface[];
     totalPages: number;
+    workstationData: Workstation;
     userData: UserInterface,
 }
 
 
 const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
-    const {status, data} = useSession();
+    const { status, data } = useSession();
     const router = useRouter()
     useEffect(() => {
         if (status === "unauthenticated") {
@@ -40,11 +40,11 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
     const [OpenOsWindow, setOpenOsWindow] = useState(false)
     const [OpenCreaditsWindow, setOpenCreaditsWindow] = useState(false)
     const [OpenConfigWindow, setOpenConfigWindow] = useState(false)
-    const [OpenSupportWindow, setSupportOpen] = useState(false)
+    const [OpenMemberList, setMemberList] = useState(false)
     const [WinboxColor, setWinboxColor] = useState<string>()
     /* Configurações do workstation */
     const [backgroundTheme, setbackgroundTheme] = useState("bg-gradient-to-bl from-slate-800 via-slate-900 to-slate-900")
-    
+
     return (
         <div className={"flex antialised " + backgroundTheme + " transition"}>
             <>
@@ -60,15 +60,16 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
                     <button onClick={() => { setOpenOsWindow(!OpenOsWindow) }} className={OpenOsWindow ? 'navItemActive' : 'navItem'}>
                         <RiSuitcaseLine size={36} className='text-white' />
                     </button>
-                    <button onClick={() => { setSupportOpen(!OpenSupportWindow) }} className={OpenSupportWindow ? 'navItemActive' : 'navItem'}>
-                        <MdSupportAgent size={36} className='text-white' />
+                    <button onClick={() => { setMemberList(!OpenMemberList) }} className={OpenMemberList ? 'navItemActive' : 'navItem'}>
+                        <FaUserFriends size={36} className='text-white' />
                     </button>
-                    <button onClick={() => { setOpenConfigWindow(!OpenConfigWindow) }} className={OpenConfigWindow ? 'navItemActive mt-auto' : 'navItem mt-auto'}>
+                    <button onClick={() => { setOpenConfigWindow(!OpenConfigWindow) }} className={OpenConfigWindow ? 'navItemActive ' : 'navItem '}>
                         <IoSettingsOutline size={36} className='text-white' />
                     </button>
-                    <a onClick={() => { setOpenConfigWindow(!OpenConfigWindow) }}>
-                        <i className=""></i>
-                    </a>
+                    <button onClick={() => router.replace("../dashboard")} className="mt-auto mb-3 ">
+                        <RiArrowGoBackLine size={36} className='text-white' />
+                    </button>
+                
                 </div>
 
                 {/* All Window Content */}
@@ -101,9 +102,9 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
                     </WinBox>
                 )}
 
-                {OpenSupportWindow && (
+                {OpenMemberList && (
                     <WinBox
-                        title={'Suporte'}
+                        title={'Membros do Workstation'}
                         noMin={false}
                         noMax={false}
                         noFull={true}
@@ -122,11 +123,11 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
                         onclose={() => {
                             // destroying actions while `onclose` must be wrapped within `setTimeout`
                             setTimeout(() => {
-                                setSupportOpen(false);
+                                setMemberList(false);
                             });
                         }}
                     >
-                        <SupportMenu />
+                        
                     </WinBox>
                 )}
 
@@ -219,7 +220,7 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
 
 
                         </div>
-                        
+
                     </WinBox>
                 )}
             </div>
@@ -245,14 +246,22 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 
     if (workstationid == undefined) {
-        
+        context.res.setHeader('Location', '/dashboard')
+        context.res.statusCode = 302
+        context.res.end()
+        return { props: {} }
     }
 
-    const { data } = await api.get(`/services?workstationId=${workstationid}`);
+
+    const WorkstationDoc = await api.get(`http://localhost:3000/api/v1/workstation?action=getWorkstationById&workstationId=${workstationid}`)
+    const WorkstationData = WorkstationDoc.data as Workstation[]
+
+    const dataService = await api.get(`/services?workstationId=${workstationid}`);
     return {
         props: {
-            services: data.data,
-            totalPages: data.totalPages,
+            services: dataService.data.data,
+            totalPages: dataService.data.totalPages,
+            workstationData: WorkstationData,
             userData: session?.user
         }
     };

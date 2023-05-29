@@ -4,7 +4,7 @@ import { generateWorkstationInviteCode } from './generatecode.service';
 import { DocumentData, arrayUnion } from 'firebase/firestore';
 
 export class workstation {
-    addWorkstation = (data: {email: string, workstationName: string, description: string, image: string}) => new Promise(async (resolve, reject) => {
+    addWorkstation = (data: { email: string, workstationName: string, description: string, image: string }) => new Promise(async (resolve, reject) => {
         try {
             console.log(data)
             const worstationCode = generateWorkstationInviteCode();
@@ -97,12 +97,22 @@ export class workstation {
         }
     }
 
+    getWorkstationbyID = (workstation_id: any) => new Promise(async (resolve, reject) => {
+        try {
+            const docRef = doc(db, 'workstation', workstation_id);
+            const workstationDoc = await getDoc(docRef).then()
+            const workstationData = workstationDoc.data() as Workstation;
+            resolve (workstationData)
+        } catch (error) {
+            reject(error)
+        }
+    })
 
     validateWorkstationById = (workstation_id: any) => new Promise(async (resolve, reject) => {
         try {
             const workstationDocRef = doc(db, "workstation", workstation_id);
             const docSnapshot = await getDoc(workstationDocRef);
-            if (docSnapshot.exists()) {
+            if (!docSnapshot.data()) {
                 // Foi encontrado um documento com o ID informado
                 resolve(true);
             } else {
