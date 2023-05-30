@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from 'zod'
 import { zodResolver} from '@hookform/resolvers/zod'
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 
 interface navProps {
   workstations: Workstation[];
@@ -56,7 +57,7 @@ export default function DashboardNavbar(props: navProps) {
 
   return (
     <main className="flex px-10 items-center w-full h-16 border-b border-zinc-700">
-      <span className="font-bold text-2xl pr-3">Workflow+</span>
+      <span className="font-bold text-2xl pr-3"><Link href="/" className="text-white">Workflow+</Link></span>
       <span className="flex items-center justify-center bg-[#101010] text-sm w-28 h-7 rounded opacity-70">
         {workstationNum} Workstations
       </span>

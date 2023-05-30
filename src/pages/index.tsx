@@ -59,7 +59,7 @@ const Home: NextPage = () => {
             </div>
           </div>
         </div>
-        <div><span className="flex flex-col items-center text-neutral-700 text-lg font-bold sm:text-sm "> Copyright © 2023 WorkFlow .</span></div>
+        <div><span className="flex flex-col items-center text-neutral-700 text-lg font-bold sm:text-sm "> Copyright © 2023 WorkFlow</span></div>
       </div>
     </div>
   )
