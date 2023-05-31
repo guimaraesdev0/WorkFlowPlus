@@ -8,7 +8,7 @@ const Home: NextPage = () => {
     <div>
       <Head><title>WorkflowPlus - Ferramente de ordem de serviço</title></Head>
       <LandpageNavbar />
-      <article className="flex flex-col w-full items-center p-2 sm:space-y-7 space-y-2 lg:space-y-7 mt-10 lg:mt-24">
+      <article className="flex flex-col w-full items-center p-2 sm:space-y-7 space-y-2 lg:space-y-7 mt-6 lg:mt-24">
         <div className="w-[115px] h-[115px] blur-[115px] animate-button-1 sm:h-[300px] sm:w-[300px] sm:blur-[300px] bg-sky-400 -z-20 absolute"></div>
         <div className="flex flex-col items-center sm:space-y-5">
           <p className="flex items-center justify-center bg-opacity-50 mx-auto text-sm sm:text-base h-6 w-44 sm:h-8 sm:w-52 bg-zinc-600 rounded-full">Bem vindo ao <span className="text-sky-400 ml-1">WorkFlow+</span></p>
