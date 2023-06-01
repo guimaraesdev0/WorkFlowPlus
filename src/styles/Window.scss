@@ -31,21 +31,21 @@
 
 .winbox {
   position: fixed;
-  border-radius: 0.25rem;
+  border-radius: 0.1rem;
+  backdrop-filter: blur(0.5rem);
   left: 0;
   top: 0;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.479), 0 10px 10px rgba(0, 0, 0, 0);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.479), 0 6px 6px rgba(0, 0, 0, 0);
   transition: width .3s, height .3s, left .3s, top .3s;
   transition-timing-function: cubic-bezier(.3, 1, .3, 1);
   contain: layout size;
   text-align: left;
-  background: #000000c7;
+  background: #191919c7;
   touch-action: none
 }
 
 .wb-header {
-  border-radius: 600px;
-  
+  border-radius: 0.1rem;
   top: 0;
   width: 100%;
   height: 35px;
@@ -95,7 +95,7 @@ body>.wb-body {
 
 .wb-title {
   font-family: Arial, sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis
@@ -108,7 +108,7 @@ body>.wb-body {
   margin: -1px 8px 0-3px;
   float: left;
   background-size: 100%;
-  background-position: center
+  background-position: center;
 }
 
 .wb-e,
@@ -131,7 +131,7 @@ body>.wb-body {
   z-index: 2
 }
 
-.wb-e {
+.wb-e { 
   position: absolute;
   right: -5px;
   bottom: 0;
@@ -228,12 +228,17 @@ body>.wb-body {
 .winbox.modal .wb-full,
 .winbox.modal .wb-max,
 .winbox.modal .wb-min {
-  display: none
+  display: none;
 }
 
 .winbox.max .wb-drag,
 .winbox.min .wb-drag {
-  cursor: default
+  cursor: default;
+  width: 100px;
+}
+
+.wb-max:hover, .wb-min:hover {
+  background-color: #272727c7;
 }
 
 .wb-min {
@@ -251,6 +256,10 @@ body>.wb-body {
   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xIC0xIDE4IDE4Ij48cGF0aCBmaWxsPSIjZmZmIiBkPSJtMS42MTMuMjEuMDk0LjA4M0w4IDYuNTg1IDE0LjI5My4yOTNsLjA5NC0uMDgzYTEgMSAwIDAgMSAxLjQwMyAxLjQwM2wtLjA4My4wOTRMOS40MTUgOGw2LjI5MiA2LjI5M2ExIDEgMCAwIDEtMS4zMiAxLjQ5N2wtLjA5NC0uMDgzTDggOS40MTVsLTYuMjkzIDYuMjkyLS4wOTQuMDgzQTEgMSAwIDAgMSAuMjEgMTQuMzg3bC4wODMtLjA5NEw2LjU4NSA4IC4yOTMgMS43MDdBMSAxIDAgMCAxIDEuNjEzLjIxeiIvPjwvc3ZnPg==);
   background-size: 15px auto;
   background-position: 5px center
+}
+
+.wb-close:hover {
+  background-color: red;
 }
 
 .wb-full {
