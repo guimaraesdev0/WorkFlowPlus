@@ -1,4 +1,3 @@
-import { workstation } from "@/services/workstations.service";
 import createWorkstationModal from "../createWorkstationModal";
 import { UserInterface, Workstation } from "@/models";
 import { useEffect, useRef, useState } from "react";
@@ -72,7 +71,7 @@ export default function DashboardNavbar(props: navProps) {
 
         <button
           onClick={() => signOut()}
-          className="flex items-center justify-center h-10 rounded font-semibold text-white transition hover:bg-zinc-700 hover:ring-1 hover:ring-zinc-600"
+          className="flex items-center justify-center bg-zinc-800 w-24 h-10 rounded font-semibold text-white transition hover:bg-zinc-700 hover:ring-1 hover:ring-zinc-600"
         >Sair</button>
       </div>
 
