@@ -1,14 +1,14 @@
 //Modules React/Next etc.
 import { GetServerSideProps, NextPage, NextPageContext } from "next";
 import dynamic from "next/dynamic";
-const WinBox = dynamic(() => import('react-winbox'), { ssr: false });
-import React, { useEffect, useRef, useState } from 'react';
+const WinBox = dynamic(() => import("react-winbox"), { ssr: false });
+import React, { useEffect, useRef, useState } from "react";
 import Head from "next/head";
-import { BiHomeAlt2 } from 'react-icons/bi';
-import {FaUserFriends} from 'react-icons/fa'
-import { RiSuitcaseLine } from 'react-icons/ri';
-import { RiArrowGoBackLine } from 'react-icons/ri';
-import { IoSettingsOutline } from 'react-icons/io5'
+import { BiHomeAlt2 } from "react-icons/bi";
+import { FaUserFriends } from "react-icons/fa"
+import { RiSuitcaseLine } from "react-icons/ri";
+import { RiArrowGoBackLine } from "react-icons/ri";
+import { IoSettingsOutline, IoGitPullRequest } from "react-icons/io5"
 import { ServiceInterface, UserInterface, Workstation } from "@/models";
 import ServiceList from "../components/ServiceList";
 import api from "@/services/api.service";
@@ -16,7 +16,6 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
-
 
 interface Props {
     services: ServiceInterface[];
@@ -53,29 +52,29 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
                 </Head>
             </>
             <div>
-                <div className='flex flex-col space-y-1 items-center w-16 h-screen bg-zinc-900 bg-opacity-90 shadow-2xl py-1 z-50'>
-                    <div className='navItem'>
-                        <BiHomeAlt2 size={36} className='text-white' />
+                <div className="flex flex-col space-y-1 items-center w-16 h-screen bg-zinc-900 bg-opacity-90 shadow-2xl py-1 z-50">
+                    <div className="navItem">
+                        <BiHomeAlt2 size={36} className="text-white" />
                     </div>
-                    <button onClick={() => { setOpenOsWindow(!OpenOsWindow) }} className={OpenOsWindow ? 'navItemActive' : 'navItem'}>
-                        <RiSuitcaseLine size={36} className='text-white' />
+                    <button onClick={() => { setOpenOsWindow(!OpenOsWindow) }} className={OpenOsWindow ? "navItemActive" : "navItem"}>
+                        <RiSuitcaseLine size={36} className="text-white" />
                     </button>
-                    <button onClick={() => { setMemberList(!OpenMemberList) }} className={OpenMemberList ? 'navItemActive' : 'navItem'}>
-                        <FaUserFriends size={36} className='text-white' />
+                    <button onClick={() => { setMemberList(!OpenMemberList) }} className={OpenMemberList ? "navItemActive" : "navItem"}>
+                        <FaUserFriends size={36} className="text-white" />
                     </button>
-                    <button onClick={() => { setOpenConfigWindow(!OpenConfigWindow) }} className={OpenConfigWindow ? 'navItemActive ' : 'navItem '}>
-                        <IoSettingsOutline size={36} className='text-white' />
+                    <button onClick={() => { setOpenConfigWindow(!OpenConfigWindow) }} className={OpenConfigWindow ? "navItemActive " : "navItem "}>
+                        <IoSettingsOutline size={36} className="text-white" />
                     </button>
                     <button onClick={() => router.replace("../dashboard")} className="mt-auto mb-3 ">
-                        <RiArrowGoBackLine size={36} className='text-white' />
+                        <RiArrowGoBackLine size={36} className="text-white" />
                     </button>
-                
+
                 </div>
 
                 {/* All Window Content */}
                 {OpenOsWindow && (
                     <WinBox
-                        title={'Serviços'}
+                        title={"Serviços"}
                         noMin={false}
                         noMax={false}
                         noFull={true}
@@ -90,7 +89,7 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
                         left={64}
                         hide={false}
                         background={WinboxColor}
-                        className={'rounded'}
+                        className={"rounded"}
                         onclose={() => {
                             // destroying actions while `onclose` must be wrapped within `setTimeout`
                             setTimeout(() => {
@@ -104,7 +103,7 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
 
                 {OpenMemberList && (
                     <WinBox
-                        title={'Membros do Workstation'}
+                        title={"Membros do Workstation"}
                         noMin={false}
                         noMax={false}
                         noFull={true}
@@ -119,7 +118,7 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
                         left={64}
                         hide={false}
                         background={WinboxColor}
-                        className={''}
+                        className={""}
                         onclose={() => {
                             // destroying actions while `onclose` must be wrapped within `setTimeout`
                             setTimeout(() => {
@@ -127,13 +126,13 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
                             });
                         }}
                     >
-                        
+
                     </WinBox>
                 )}
 
                 {OpenCreaditsWindow && (
                     <WinBox
-                        title={'WorkFlow Plus | Creditos'}
+                        title={"WorkFlow Plus | Creditos"}
                         noMin={false}
                         noMax={false}
                         noFull={true}
@@ -148,7 +147,7 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
                         left={64}
                         hide={false}
                         background={WinboxColor}
-                        className={''}
+                        className={""}
                         onclose={() => {
                             // destroying actions while `onclose` must be wrapped within `setTimeout`
                             setTimeout(() => {
@@ -162,7 +161,7 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
 
                 {OpenConfigWindow && (
                     <WinBox
-                        title={'Configurações'}
+                        title={"Configurações"}
                         noMin={true}
                         noMax={true}
                         noFull={true}
@@ -178,7 +177,7 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
                         background={WinboxColor}
                         left={64}
                         hide={false}
-                        className={''}
+                        className={""}
                         onclose={() => {
                             // destroying actions while `onclose` must be wrapped within `setTimeout`
                             setTimeout(() => {
@@ -187,40 +186,24 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
                         }}
                     >
                         <div>
-                            <span className=" text-2xl">Temas</span>
-
-                            <div className=" flex">
-
-                                <div className=" mr-5 h-16 w-16 rounded bg-gradient-to-r from-blue-800 to-indigo-900" onClick={() => { setbackgroundTheme("bg-gradient-to-r from-blue-800 to-indigo-900") }} />
-
-                                <div className=" mr-5 h-16 w-16 rounded bg-gradient-to-r from-green-400 via-cyan-900 to-blue-500" onClick={() => { setbackgroundTheme("bg-gradient-to-r from-green-400 via-cyan-900 to-blue-500") }} />
-
-                                <div className=" mr-5 h-16 w-16 rounded bg-gradient-to-t from-rose-500 via-purple-600 to-blue-400" onClick={() => { setbackgroundTheme("bg-gradient-to-t from-rose-500 via-purple-600 to-blue-400") }} />
-
-                                <div className=" mr-5 h-16 w-16 rounded bg-gradient-to-bl from-slate-700 via-neutral-800 to-green-800" onClick={() => { setbackgroundTheme("bg-gradient-to-bl from-slate-700 via-neutral-800 to-green-800") }} />
-
-                                <div className=" mr-5 h-16 w-16 rounded bg-gradient-to-bl from-slate-800 via-slate-900 to-slate-900" onClick={() => { setbackgroundTheme("bg-gradient-to-bl from-slate-800 via-slate-900 to-slate-900") }} />
-
+                            <span className="text-2xl">Temas</span>
+                            <div className="flex">
+                                <div className="mr-5 h-16 w-16 rounded bg-gradient-to-r from-blue-800 to-indigo-900" onClick={() => { setbackgroundTheme("bg-gradient-to-r from-blue-800 to-indigo-900") }} />
+                                <div className="mr-5 h-16 w-16 rounded bg-gradient-to-r from-green-400 via-cyan-900 to-blue-500" onClick={() => { setbackgroundTheme("bg-gradient-to-r from-green-400 via-cyan-900 to-blue-500") }} />
+                                <div className="mr-5 h-16 w-16 rounded bg-gradient-to-t from-rose-500 via-purple-600 to-blue-400" onClick={() => { setbackgroundTheme("bg-gradient-to-t from-rose-500 via-purple-600 to-blue-400") }} />
+                                <div className="mr-5 h-16 w-16 rounded bg-gradient-to-bl from-slate-700 via-neutral-800 to-green-800" onClick={() => { setbackgroundTheme("bg-gradient-to-bl from-slate-700 via-neutral-800 to-green-800") }} />
+                                <div className="mr-5 h-16 w-16 rounded bg-gradient-to-bl from-slate-800 via-slate-900 to-slate-900" onClick={() => { setbackgroundTheme("bg-gradient-to-bl from-slate-800 via-slate-900 to-slate-900") }} />
                             </div>
 
-
-                            <div className=" mt-2 flex">
-
-                                <div className=" mr-5 h-16 w-16 rounded bg-gradient-to-tr from-green-600 via-blue-600 to-indigo-500" onClick={() => { setbackgroundTheme("bg-gradient-to-tr from-green-600 via-blue-600 to-indigo-500") }} />
-
-                                <div className=" mr-5 h-16 w-16 rounded bg-gradient-to-r from-green-400 via-cyan-900 to-blue-500" onClick={() => { setbackgroundTheme("bg-gradient-to-r from-green-400 via-cyan-900 to-blue-500") }} />
-
-                                <div className=" mr-5 h-16 w-16 rounded bg-gradient-to-t from-rose-500 via-purple-600 to-blue-400" onClick={() => { setbackgroundTheme("bg-gradient-to-t from-rose-500 via-purple-600 to-blue-400") }} />
-
-                                <div className=" mr-5 h-16 w-16 rounded bg-gradient-to-bl from-slate-700 via-neutral-800 to-green-800" onClick={() => { setbackgroundTheme("bg-gradient-to-bl from-slate-700 via-neutral-800 to-green-800") }} />
-
-                                <div className=" mr-5 h-16 w-16 rounded bg-gradient-to-bl from-slate-800 via-slate-900 to-slate-900" onClick={() => { setbackgroundTheme("bg-gradient-to-bl from-slate-800 via-slate-900 to-slate-900") }} />
-
+                            <div className="mt-2 flex">
+                                <div className="mr-5 h-16 w-16 rounded bg-gradient-to-tr from-green-600 via-blue-600 to-indigo-500" onClick={() => { setbackgroundTheme("bg-gradient-to-tr from-green-600 via-blue-600 to-indigo-500") }} />
+                                <div className="mr-5 h-16 w-16 rounded bg-gradient-to-r from-green-400 via-cyan-900 to-blue-500" onClick={() => { setbackgroundTheme("bg-gradient-to-r from-green-400 via-cyan-900 to-blue-500") }} />
+                                <div className="mr-5 h-16 w-16 rounded bg-gradient-to-t from-rose-500 via-purple-600 to-blue-400" onClick={() => { setbackgroundTheme("bg-gradient-to-t from-rose-500 via-purple-600 to-blue-400") }} />
+                                <div className="mr-5 h-16 w-16 rounded bg-gradient-to-bl from-slate-700 via-neutral-800 to-green-800" onClick={() => { setbackgroundTheme("bg-gradient-to-bl from-slate-700 via-neutral-800 to-green-800") }} />
+                                <div className="mr-5 h-16 w-16 rounded bg-gradient-to-bl from-slate-800 via-slate-900 to-slate-900" onClick={() => { setbackgroundTheme("bg-gradient-to-bl from-slate-800 via-slate-900 to-slate-900") }} />
                             </div>
-
 
                         </div>
-
                     </WinBox>
                 )}
             </div>
@@ -239,14 +222,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const session = await getServerSession(context.req, context.res, authOptions)
     if (session == undefined) {
-        context.res.setHeader('Location', '/auth/login')
+        context.res.setHeader("Location", "/auth/login")
         context.res.statusCode = 302
         context.res.end()
         return { props: {} }
     }
 
     if (workstationid == undefined) {
-        context.res.setHeader('Location', '/dashboard')
+        context.res.setHeader("Location", "/dashboard")
         context.res.statusCode = 302
         context.res.end()
         return { props: {} }
