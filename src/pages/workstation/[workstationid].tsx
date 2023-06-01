@@ -40,6 +40,7 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
     const [OpenCreaditsWindow, setOpenCreaditsWindow] = useState(false)
     const [OpenConfigWindow, setOpenConfigWindow] = useState(false)
     const [OpenMemberList, setMemberList] = useState(false)
+    const [OpenNewServiceForm, setOpenNewServiceForm] = useState(false)
     const [WinboxColor, setWinboxColor] = useState<string>()
     /* Configurações do workstation */
     const [backgroundTheme, setbackgroundTheme] = useState("bg-gradient-to-bl from-slate-800 via-slate-900 to-slate-900")
@@ -65,7 +66,10 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
                     <button onClick={() => { setOpenConfigWindow(!OpenConfigWindow) }} className={OpenConfigWindow ? "navItemActive " : "navItem "}>
                         <IoSettingsOutline size={36} className="text-white" />
                     </button>
-                    <button onClick={() => router.replace("../dashboard")} className="mt-auto mb-3 ">
+                    <button onClick={() => { setOpenNewServiceForm(!OpenNewServiceForm) }}className={OpenNewServiceForm ? "navItemActive " : "navItem "}>
+                        <IoGitPullRequest size={36}/>
+                    </button>
+                    <button onClick={() => router.replace("../dashboard")} className="mt-auto navItem">
                         <RiArrowGoBackLine size={36} className="text-white" />
                     </button>
 
@@ -89,7 +93,7 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
                         left={64}
                         hide={false}
                         background={WinboxColor}
-                        className={"rounded"}
+                        className={""}
                         onclose={() => {
                             // destroying actions while `onclose` must be wrapped within `setTimeout`
                             setTimeout(() => {
@@ -204,6 +208,35 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
                             </div>
 
                         </div>
+                    </WinBox>
+                )}
+
+                {OpenNewServiceForm && (
+                    <WinBox
+                        title={"Criar novo serviço"}
+                        noMin={false}
+                        noMax={false}
+                        noFull={true}
+                        noClose={false}
+                        width={Math.min(document.body.clientWidth, 700)}
+                        height={Math.min(document.body.clientHeight, 500)}
+                        x="center"
+                        y="center"
+                        top={0}
+                        right={0}
+                        bottom={0}
+                        left={64}
+                        hide={false}
+                        background={WinboxColor}
+                        className={"rounded"}
+                        onclose={() => {
+                            // destroying actions while `onclose` must be wrapped within `setTimeout`
+                            setTimeout(() => {
+                                setOpenNewServiceForm(false);
+                            });
+                        }}
+                    >
+                    
                     </WinBox>
                 )}
             </div>
