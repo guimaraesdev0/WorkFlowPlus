@@ -1,14 +1,12 @@
 import Head from "next/head"
-import { FormEventHandler, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { UserInterface } from "@/models"
 import { AiOutlineCodepenCircle } from "react-icons/ai"
 import { signIn, useSession } from "next-auth/react";
 import axios from "axios"
-import { toast } from "react-toastify"
 import { Router, useRouter } from "next/router";
-import LandpageNavbar from "../components/NavBar/LandpageNavbar";
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
+import { z } from "zod"
+import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const createUserSchema = z.object({
@@ -36,8 +34,6 @@ const createUserSchema = z.object({
 type createUserSchemaData = z.infer<typeof createUserSchema>
 
 export default function Register() {
-
-
     const [UserData, setUserData] = useState({ UserFirstName: "", UserLastname: "", UserEmail: "", UserPassword: "", UserPasswordRepeat: "" })
     const [errormsg, setError] = useState();
     const { status } = useSession();
@@ -50,9 +46,11 @@ export default function Register() {
         if (status === "authenticated") {
             router.replace("/dashboard/")
         }
+        console.log(status)
     }, [status])
 
     async function createUser(data: any) {
+        console.log(data)
         const options = {
             method: "POST",
             url: "/api/v1/users",
@@ -72,8 +70,8 @@ export default function Register() {
             .request(options)
             .then(async res => {
                 const resLogIn = await signIn("credentials", {
-                    email: UserData.UserEmail,
-                    password: UserData.UserPassword,
+                    email: data.email,
+                    password: data.password,
                     redirect: false
                 })
                 console.log(resLogIn)
@@ -99,7 +97,7 @@ export default function Register() {
                             placeholder="Seu nome"
                             className="formInput"
                             required
-                            {...register('first_name')}
+                            {...register("first_name")}
                         />
                     </div>
                     <div className="w-full">
@@ -108,7 +106,7 @@ export default function Register() {
                             required
                             placeholder="Seu sobrenome"
                             className="formInput"
-                            {...register('last_name')} />
+                            {...register("last_name")} />
                     </div>
                     <div className="w-full">
                         <input
@@ -116,7 +114,7 @@ export default function Register() {
                             placeholder="Seu email"
                             className="formInput"
                             required
-                            {...register('email')}
+                            {...register("email")}
                         />
                     </div>
                     <div className="w-full">
@@ -125,7 +123,7 @@ export default function Register() {
                             placeholder="Sua senha (Minímo 6 characteres)"
                             className="formInput"
                             required
-                            {...register('password')}
+                            {...register("password")}
                         />
                     </div>
                     <div className="w-full">
@@ -134,7 +132,7 @@ export default function Register() {
                             placeholder="Confirme senha"
                             required
                             className="formInput"
-                            {...register('confirm_password')}
+                            {...register("confirm_password")}
                         />
                     </div>
                     <div className="w-full">
@@ -154,4 +152,3 @@ export default function Register() {
         </div>
     )
 }
-
