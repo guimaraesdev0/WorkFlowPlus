@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
+import NewServiceForm from "./pages/NewServiceForm";
 
 interface Props {
     services: ServiceInterface[];
@@ -228,7 +229,7 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
                         left={64}
                         hide={false}
                         background={WinboxColor}
-                        className={"rounded"}
+                        className={""}
                         onclose={() => {
                             // destroying actions while `onclose` must be wrapped within `setTimeout`
                             setTimeout(() => {
@@ -236,7 +237,7 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
                             });
                         }}
                     >
-                    
+                        <NewServiceForm />
                     </WinBox>
                 )}
             </div>
