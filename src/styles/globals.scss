@@ -15,6 +15,13 @@
         // background-image: linear-gradient(190deg, #0776d0 0%, #000000 30%, #0c0c0c 100%);
     }
 
+    .navbar-workstation {
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        background: rgba(36, 36, 36, .8);
+        @apply space-y-1 items-center w-16 h-screen shadow-2xl py-1 z-50;
+    }
+
     .bg-main {
         background-image: url(../../public/bgws1.png);
         background-repeat: no-repeat;
@@ -22,10 +29,10 @@
     }
 
     .navItem {
-        @apply flex justify-center items-center bg-transparent w-full h-14 shadow-2xl cursor-pointer ease-in-out transition-all hover:bg-zinc-700 hover:bg-opacity-50 active:bg-opacity-10 active:scale-75 
+        @apply flex justify-center items-center bg-transparent text-3xl w-full h-14 shadow-2xl cursor-pointer ease-in-out transition-all hover:bg-zinc-700 hover:bg-opacity-50 active:bg-opacity-10 active:scale-75 
     } 
     .navItemActive {
-        @apply flex justify-center items-center bg-zinc-700 bg-opacity-80 w-full h-14 shadow-2xl cursor-pointer transition-all border-l-2 border-l-sky-500  
+        @apply flex justify-center items-center bg-zinc-700 bg-opacity-80 w-full h-14 shadow-2xl cursor-pointer transition-all border-l-2 border-l-sky-500 text-2xl
     } 
 
     .formInput {

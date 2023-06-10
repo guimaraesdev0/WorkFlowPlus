@@ -53,24 +53,24 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
                 </Head>
             </>
             <div>
-                <div className="flex flex-col space-y-1 items-center w-16 h-screen bg-zinc-900 bg-opacity-90 shadow-2xl py-1 z-50">
+                <div className="flex flex-col navbar-workstation">
                     <div className="navItem">
-                        <BiHomeAlt2 size={36} className="text-white" />
+                        <BiHomeAlt2 className="text-white" />
                     </div>
                     <button onClick={() => { setOpenOsWindow(!OpenOsWindow) }} className={OpenOsWindow ? "navItemActive" : "navItem"}>
-                        <RiSuitcaseLine size={36} className="text-white" />
+                        <RiSuitcaseLine className="text-white" />
                     </button>
                     <button onClick={() => { setMemberList(!OpenMemberList) }} className={OpenMemberList ? "navItemActive" : "navItem"}>
-                        <FaUserFriends size={36} className="text-white" />
+                        <FaUserFriends className="text-white" />
                     </button>
                     <button onClick={() => { setOpenConfigWindow(!OpenConfigWindow) }} className={OpenConfigWindow ? "navItemActive " : "navItem "}>
-                        <IoSettingsOutline size={36} className="text-white" />
+                        <IoSettingsOutline className="text-white" />
                     </button>
                     <button onClick={() => { setOpenNewServiceForm(!OpenNewServiceForm) }}className={OpenNewServiceForm ? "navItemActive " : "navItem "}>
-                        <IoGitPullRequest size={36}/>
+                        <IoGitPullRequest/>
                     </button>
                     <button onClick={() => router.replace("../dashboard")} className="mt-auto navItem">
-                        <RiArrowGoBackLine size={36} className="text-white" />
+                        <RiArrowGoBackLine className="text-white" />
                     </button>
 
                 </div>
