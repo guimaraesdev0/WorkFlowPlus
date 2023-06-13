@@ -8,7 +8,7 @@ import { serviceController } from '@/controller';
 const PAGE_SIZE = 10; /* Máximo de objetos que irão retornar em cada página */
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method == 'POST') {
+  if (req.method === 'POST') {
     try {
       const FormData = req.body
       const TrustedData = await ValidateServiceForm(FormData) as ServiceInterface
