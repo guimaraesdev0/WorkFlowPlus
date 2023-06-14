@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from "react";
 import DashboardNavbar from "../components/dashboard/UI/DashboardNavbar";
 import { Workstation, UserInterface } from "@/models";
 import api from "@/services/api.service";
@@ -6,7 +7,6 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import Link from "next/link";
 import WorkstationCard from "../components/dashboard/WorkStationCard";
 import Head from "next/head";
-import {IoMdAddCircle} from "react-icons/io"
 
 interface props {
     workstation: Workstation[],
@@ -15,6 +15,26 @@ interface props {
 }
 
 export default function DashboardPage(props: props) {
+    const [showModal, setShowModal] = useState<boolean>(false)
+    const modalRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+          if (
+            modalRef.current &&
+            !modalRef.current.contains(event.target as Node)
+          ) {
+            setShowModal(false);
+          }
+        };
+    
+        document.addEventListener("mousedown", handleClickOutside);
+    
+        return () => {
+          document.removeEventListener("mousedown", handleClickOutside);
+        };
+      }, []);
+
     return (
         <main className="flex flex-col w-full ">
             <Head>
@@ -37,11 +57,26 @@ export default function DashboardPage(props: props) {
                         )
                     })
                 }
-                <button className="flex flex-col w-64 h-52 rounded ring-1 ring-neutral-800 p-3 transition ease-in-out duration-100 hover:bg-neutral-800">
+                <button onClick={() => {setShowModal(true)}} className="flex flex-col w-64 h-52 rounded ring-1 ring-neutral-800 p-3 transition ease-in-out duration-100 hover:bg-neutral-800">
                     <span className="text-white font-semibold text-lg h-10">Entrar em um Workstation</span>
                     <span className="text-zinc-300 h-32 text-sm text-left overflow-hidden ...">Entrar em um workstations usando código de convite.</span>
                 </button>
             </section>
+
+            {showModal && (
+                <div className="bg-zinc-900 bg-opacity-80 w-screen h-screen flex absolute items-center justify-center">
+                    <div ref={modalRef} className="flex flex-col p-4 pt-12 space-y-5 items-center w-[30rem] h-96 bg-zinc-800 rounded-lg">
+                        <p className="text-4xl font-bold text-center">Entrar em um Workstation</p>
+                        <form className="w-full h-full flex flex-col p-4 space-y-4">
+                        <input type="text" className="block h-12 w-full rounded bg-zinc-700 pl-3 ring-1 ring-zinc-600" placeholder="Insira código de Workstation" />
+                        <input
+                            type="submit"
+                            className=" mt-7 text-center self-end cursor-pointer bg-zinc-700 w-40 h-10 rounded font-semibold text-white transition hover:bg-zinc-700 hover:ring-1 hover:ring-zinc-600"
+                        />
+                    </form>
+                    </div>
+                </div>
+            )}
         </main>
     )
 }
