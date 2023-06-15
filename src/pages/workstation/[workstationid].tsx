@@ -237,7 +237,7 @@ const Home: NextPage<Props> = ({ services, totalPages, userData }: Props) => {
                             });
                         }}
                     >
-                        <NewServiceForm workstationId={workstationid} userName={userData.last_name + " " + userData.last_name} />
+                        <NewServiceForm workstationId={workstationid} userName={userData.first_name + " " + userData.last_name} />
                     </WinBox>
                 )}
             </div>

@@ -36,7 +36,6 @@ export default function createWorkstationModal(register: any, handleSubmit: any,
                     <form onSubmit={handleSubmit(createWorkstation)} className="w-full h-full flex flex-col p-4 space-y-4">
                         <input type="text" className="block h-12 w-full rounded bg-zinc-700 pl-3 ring-1 ring-zinc-600" placeholder="Nome do Workstation" {...register("workstationName")} />
                         <input type="text" className="block h-12 w-full rounded bg-zinc-700 pl-3 ring-1 ring-zinc-600" placeholder="Descrição do Workstation" {...register("workstationDesc")} />
-                        <input type="text" className="block h-12 w-full rounded bg-zinc-700 pl-3 ring-1 ring-zinc-600" placeholder="Foto do Workstation" {...register("workstationPhoto")} />
                         {errors.workstationName && (<span>{errors.workstationName.message}</span>)}
                         {errors.workstationDesc && (<span>{errors.workstationDesc.message}</span>)}
                         <input

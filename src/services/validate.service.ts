@@ -10,12 +10,6 @@ export const ValidateServiceForm = (FormData: ServiceInterface) => new Promise((
         reject("Nenhum campo deve estar vazio")
         return
     }
-
-    //Verifica o tamanho da descrição
-    if (FormData.description.length < 30) {
-        reject("A descrição precisa ser mais detalhada")
-        return;
-    }
     
     /* Define valores padrão para o status */
     const NewData = {
