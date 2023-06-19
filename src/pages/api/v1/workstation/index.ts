@@ -63,11 +63,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         if (body.action == "addColaborators") {
             try {
-                const body: { email: string, workstation_id: string } = req.body;
-                workstationController.addColaborators(body.email, body.workstation_id);
-                res.status(200).json({ success: 'Usuario adicionado com sucesso.' });
+                const body: { email: string, code: string } = req.body;
+                const workstation_id = await workstationController.getWorkstationIdByCode(body.code)
+                await workstationController.addColaborators(body.email, workstation_id as string); 
+                res.status(200).json({ success: 'workstationid: ' + workstation_id });
             } catch (error) {
-                res.status(500).json({ error: 'ocorreu um erro' })
+                res.status(500).json({ error: 'ocorreu um erro ' + error })
             }
         }
 

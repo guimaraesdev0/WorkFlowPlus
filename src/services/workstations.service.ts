@@ -23,12 +23,24 @@ export class workstation {
         }
     })
 
+    getWorkstationIdByCode = (code:string) => new Promise(async (resolve, reject) => {
+        try {
+            const querySnapshot = await getDocs(query(collection(db, 'workstation'), where('code', '==', code)));
+            if (!querySnapshot.empty) {
+              resolve (querySnapshot.docs[0].id)
+            }
+        } catch (error) {
+            console.error(`Erro ao buscar workstation por código: ${error}`);
+        }
+    })
+
     addColaborators = (user_email: string, workstation_id: string) => new Promise(async (resolve, reject) => {
         try {
             const docRef = doc(db, 'workstation', workstation_id)
             await updateDoc(docRef, {
                 collaborators: arrayUnion({ email: user_email, manager: false, whitelist: true })
             })
+            resolve (true)
         } catch (error) {
             reject(error);
         }

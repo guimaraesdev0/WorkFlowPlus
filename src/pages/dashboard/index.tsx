@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, FormEventHandler } from "react";
 import DashboardNavbar from "../components/dashboard/UI/DashboardNavbar";
 import { Workstation, UserInterface } from "@/models";
 import api from "@/services/api.service";
@@ -7,6 +7,8 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import Link from "next/link";
 import WorkstationCard from "../components/dashboard/WorkStationCard";
 import Head from "next/head";
+import axios from "axios";
+
 
 interface props {
     workstation: Workstation[],
@@ -17,6 +19,38 @@ interface props {
 export default function DashboardPage(props: props) {
     const [showModal, setShowModal] = useState<boolean>(false)
     const modalRef = useRef<HTMLDivElement>(null);
+    const [workstationCode, setWorkstationCode] = useState('');
+    const [successMsg, setSuccessMsg] = useState<string>()
+    const [errorMsg, seterrorMsg] = useState<string>()
+
+    const HandleSubmit:FormEventHandler<HTMLFormElement> = async (e) => {
+        e.preventDefault()
+        const options = {
+            method: "PATCH",
+            url: "http://localhost:3000/api/v1/workstation",
+            headers: {
+                "content-type": "application/json",
+            },
+            data:
+            {
+                "action": "addColaborators",
+                "email": props.userData.email,
+                "code": workstationCode
+            },
+        };
+
+        await axios
+            .request(options)
+            .then((success) => {
+                setWorkstationCode('')
+                setSuccessMsg('Você entrou no workstation com sucesso.')
+                console.log(success)
+            }).catch((error) => {
+                seterrorMsg('Ocorreu um erro ao entrar no workstation.')
+                console.log(error)
+        })
+    };
+    
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -67,19 +101,26 @@ export default function DashboardPage(props: props) {
                 <div className="bg-zinc-900 bg-opacity-80 w-screen h-screen flex absolute items-center justify-center">
                     <div ref={modalRef} className="flex flex-col p-4 pt-12 space-y-5 items-center w-[30rem] h-96 bg-zinc-800 rounded-lg">
                         <p className="text-4xl font-bold text-center">Entrar em um Workstation</p>
-                        <form className="w-full h-full flex flex-col p-4 space-y-4">
-                        <input type="text" className="block h-12 w-full rounded bg-zinc-700 pl-3 ring-1 ring-zinc-600" placeholder="Insira código de Workstation" />
+                        {successMsg && (<span className="h-10 pt-2 w-full rounded bg-green-500">{successMsg}</span>)}
+                        {errorMsg && (<span className="h-10 pt-2 w-full rounded bg-red-500">{errorMsg}</span>)}
+                        <form onSubmit={HandleSubmit} className=" w-full">
+                        <input value={workstationCode} onChange={(e) => { setWorkstationCode(e.target.value)}} type="text" className="block h-12 w-full rounded bg-zinc-700 pl-3 ring-1 ring-zinc-600" placeholder="Insira código de Workstation" />
                         <input
                             type="submit"
                             className=" mt-7 text-center self-end cursor-pointer bg-zinc-700 w-40 h-10 rounded font-semibold text-white transition hover:bg-zinc-700 hover:ring-1 hover:ring-zinc-600"
                         />
-                    </form>
+                        </form>
                     </div>
                 </div>
             )}
         </main>
+        
     )
+    
 }
+
+
+
 
 export async function getServerSideProps(context: any) {
     const session = await getServerSession(context.req, context.res, authOptions)
