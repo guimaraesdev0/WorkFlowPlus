@@ -20,22 +20,6 @@ The backend of WorkFlow Plus operates through API's and API's Rest, enabling eff
 
 Overall, WorkFlow Plus is a comprehensive and efficient software solution for businesses looking to streamline their internal organization and improve their productivity.
 
-## Changelog
-- V0.1
-Made the first version of the site, with the windows system: React-Winbox, and the first WorkStation image
-- V0.2
-The first version of the WorkFlow Taskbar was made
-- V0.3
-API'S of service and user and Authentication using Next-Auth, started to be developed together with firebase, and the system of form validations
-- Version 0.4
-1. Tailwind introduced as main Front End tool by our team, 60% of API's complete
-2. New version of the WorkFlow taskbar was made entirely in Tailwind
-3. First version of the Registration and Login front end done
-- V0.5 Optimization and improvement of service API
-1. Now the service list is a component for best practices and organization
-2. Now services have paging system and loading system to optimize the page
-
-
 ## How to Run
 ### .ENV config
 
